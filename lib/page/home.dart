@@ -8,39 +8,60 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
+      backgroundColor: Colors.white,
       body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 40, left: 20, right: 20),
-            decoration: BoxDecoration(boxShadow: [
-              BoxShadow(
-                  color: Color(0xff1D1617).withOpacity(0.11),
-                  blurRadius: 40,
-                  spreadRadius: 0.0)
-            ]),
-            child: TextField(
-              decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: EdgeInsets.all(15),
-                  prefixIcon: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: SvgPicture.asset(
-                        "assets/icons/busqueda.svg",
-                      )),
-                  suffixIcon: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: SvgPicture.asset(
-                        "assets/icons/filtro.svg",
-                        height: 20,
-                        width: 20,
-                      )),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide.none)),
+        children: [_search()],
+      ),
+    );
+  }
+
+  Container _search() {
+    return Container(
+      margin: EdgeInsets.only(top: 40, left: 20, right: 20),
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+            color: Color(0xff1D1617).withOpacity(0.11),
+            blurRadius: 40,
+            spreadRadius: 0.0)
+      ]),
+      child: TextField(
+        decoration: InputDecoration(
+            hintText: "Search",
+            hintStyle: TextStyle(color: Color(0xffDDDADA), fontSize: 14),
+            filled: true,
+            fillColor: Colors.white,
+            contentPadding: EdgeInsets.all(15),
+            prefixIcon: Padding(
+                padding: const EdgeInsets.all(12),
+                child: SvgPicture.asset(
+                  "assets/icons/busqueda.svg",
+                )),
+            suffixIcon: Container(
+              width: 60,
+              child: IntrinsicHeight(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    VerticalDivider(
+                      color: Colors.black,
+                      indent: 10,
+                      endIndent: 10,
+                      thickness: 0.1,
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: SvgPicture.asset(
+                          "assets/icons/filtro.svg",
+                          height: 20,
+                          width: 20,
+                        )),
+                  ],
+                ),
+              ),
             ),
-          )
-        ],
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide.none)),
       ),
     );
   }
