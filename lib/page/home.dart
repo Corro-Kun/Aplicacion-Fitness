@@ -1,8 +1,25 @@
+import 'package:fitness/models/CategoryModels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<CategoryModels> categories = [];
+
+  void _getCategory() {
+    categories = CategoryModels.getCategory();
+  }
+
+  @override
+  void initState() {
+    _getCategory();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,31 +33,71 @@ class HomePage extends StatelessWidget {
           SizedBox(
             height: 40,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 22),
-                child: Text(
-                  'Category',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                height: 150,
-                color: Colors.green,
-              ),
-            ],
-          )
+          _categories_Selection()
         ],
       ),
+    );
+  }
+
+  Column _categories_Selection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 22),
+          child: Text(
+            'Category',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Container(
+          height: 120,
+          child: ListView.separated(
+              itemCount: categories.length,
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.only(left: 20, right: 20),
+              separatorBuilder: (context, index) => SizedBox(width: 20),
+              itemBuilder: (context, index) {
+                return Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                    color: categories[index].boxColor.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                            color: Colors.white, shape: BoxShape.circle),
+                        child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child:
+                                SvgPicture.asset(categories[index].iconPath)),
+                      ),
+                      Text(
+                        categories[index].name,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                          fontSize: 14,
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }),
+        ),
+      ],
     );
   }
 
