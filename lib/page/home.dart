@@ -1,4 +1,5 @@
 import 'package:fitness/models/CategoryModels.dart';
+import 'package:fitness/models/DietModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -10,13 +11,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<CategoryModels> categories = [];
+  List<DietModel> diets = [];
 
   void _getCategory() {
     categories = CategoryModels.getCategory();
   }
 
+  void _getDiets() {
+    diets = DietModel.getDiets();
+  }
+
   @override
   void initState() {
+    _getDiets();
     _getCategory();
     super.initState();
   }
@@ -33,7 +40,46 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 40,
           ),
-          _categories_Selection()
+          _categories_Selection(),
+          SizedBox(
+            height: 40,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 22),
+                child: Text(
+                  "Recommendation\nfor Diet",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                height: 240,
+                child: ListView.separated(
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: 210,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) => SizedBox(width: 20),
+                  itemCount: 3,
+                  scrollDirection: Axis.horizontal,
+                ),
+              )
+            ],
+          )
         ],
       ),
     );
